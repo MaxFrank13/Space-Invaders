@@ -6,22 +6,52 @@ class Player extends GameObject {
             y: 10,
             x: 10
         }
+        this.ammo = 20;
     }
     update(state){
         switch (state) {
             case "up":
-                this.position.y -= this.velocity.y;
+                if (this.position.y > 400) {
+                    this.position.y -= this.velocity.y;
+                } else {
+                    this.position.y = 400;
+                }
                 break;
             case "down":
-                this.position.y += this.velocity.y;
+                if (this.position.y + this.height < this.ctx.canvas.height) {
+                    this.position.y += this.velocity.y;
+                } else {
+                    this.position.y = this.ctx.canvas.height - this.height;
+                }
                 break;
             case "left":
-                this.position.x -= this.velocity.x;
+                if (this.position.x > 0) {
+                    this.position.x -= this.velocity.x;
+                } else {
+                    this.position.x = 0;
+                }
                 break;
             case "right":
-                this.position.x += this.velocity.x;
+                if (this.position.x + this.width < this.ctx.canvas.width) {
+                    this.position.x += this.velocity.x;
+                } else {
+                    this.position.x = this.ctx.canvas.width - this.width;
+                }
                 break;
         }
-        this.draw(this.ctx);
+    }
+    shoot(){
+        return new Projectile({
+            ctx: this.ctx,
+            type: "weapon",
+            position: {
+                x: this.position.x + 4,
+                y: this.position.y
+            },
+            width: 15,
+            height: 15,
+            color: "red"
+        });
+        
     }
 }
