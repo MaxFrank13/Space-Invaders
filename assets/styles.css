@@ -6,6 +6,14 @@
 body {
     overflow: hidden;
     background: black;
+    box-shadow: inset 0 -10px 10px 10px white;
+}
+.intro {
+    height: 100vh;
+    width: 100vw;
+    /* background: url(./media/1x/intro-bg.png) center / 100% no-repeat; */
+    background: #707064;
+
 }
 .game-container {
     display: grid;
@@ -15,7 +23,8 @@ body {
     align-items: center;
     align-content: center;
     padding-top: 1rem;
-    background: url(./media/1x/Asset\ 3.png) center / cover no-repeat;
+    background: url(./media/1x/GameBoy-interface.png) center / cover no-repeat;
+    display: none;
 }
 .canvas1 {
     padding: 1rem;

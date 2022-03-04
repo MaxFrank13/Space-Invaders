@@ -178,11 +178,11 @@ function animate() {
     ctx.fillStyle = 'grey';
     ctx.fillRect(0, 0, canvas1.width, canvas1.height);
 
-    player.draw(ctx);
+    player.draw(player.ctx);
     player.update(player.direction[0]);
 
     enemies.forEach(item => {
-        item.draw(ctx);
+        item.draw(item.ctx);
         item.update();
         if (checkCollision(item, player)) {
             player.hit = true;
@@ -197,12 +197,12 @@ function animate() {
                 hitScore++;
             }
         })
-        projectile.draw(ctx);
+        projectile.draw(projectile.ctx);
         projectile.update();
     })
 
     ammo.forEach((item, index) => {
-        item.draw(ctx);
+        item.draw(item.ctx);
         if (checkCollision(item, player)) {
             ammo.splice(index, 1);
             player.ammo += item.value;
