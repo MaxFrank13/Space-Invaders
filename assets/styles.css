@@ -13,14 +13,20 @@ body {
     width: 100vw;
     justify-items: center;
     align-items: center;
+    align-content: center;
+    padding-top: 1rem;
+    background: url(./media/1x/Asset\ 3.png) center / cover no-repeat;
 }
 .canvas1 {
     padding: 1rem;
     width: 400px;
     height: 360px;
 }
+.hide {
+    display: none;
+}
 
-@media screen and (min-width: 875px) {
+@media screen and (min-width: 786px) {
     .canvas1 {
         width: 800px;
         height: 720px;
