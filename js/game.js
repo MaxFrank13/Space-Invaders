@@ -4,6 +4,12 @@ const ctx = canvas1.getContext('2d');
 canvas1.width = 800;
 canvas1.height = 720;
 
+// Game Global Variables
+let hitScore = 0;
+let timeScore = 0;
+let timerId;
+let wave = 0;
+
 // Control Panel
 const startBtn = document.querySelector(".start");
 const resetBtn = document.querySelector(".reset");
@@ -35,8 +41,11 @@ const config = {
             x: 400,
             y: 675
         },
-        width: 25,
-        height: 25,
+        width: 99,
+        height: 75,
+        sprite: {
+            src: 'assets/media/spaceshooter/PNG/playerShip1_blue.png'
+        },
         color: "blue"
     }
 }
@@ -53,21 +62,23 @@ const player = new Player(config.player);
 const enemies = generateEnemies();
 // Ammo
 const ammo = deployAmmo();
+// Particles
+const particles = [];
 
 // Direction Input & Controls
 
 window.addEventListener('keydown', (e) => {
-    
+
     // player control
     const dir = player.direction;
-    if (config.map[e.code] !== undefined) {
+    if (config.map[e.code] !== undefined && player.controlled) {
         const input = config.map[e.code];
         if (dir && dir.indexOf(input) === -1) {
             dir.unshift(input);
         }
     };
     // player abilities
-    if (e.code === "Space") {
+    if (e.code === "Space" && player.controlled) {
         playerShoot();
     }
     // idea for 'magnetic level' where player is bound to one side of map
@@ -94,14 +105,18 @@ function generateEnemies() {
             ctx,
             type: "enemy",
             position: {
-                x: 40 * i,
+                x: 60 * i,
                 y: -50
             },
-            width: 25,
-            height: 25,
+            width: 91,
+            height: 91,
+            sprite: {
+                src: 'assets/media/spaceshooter/PNG/ufoGreen.png'
+            },
             color: "green"
         }))
     }
+    wave++;
     return enemyArray;
 }
 
@@ -112,11 +127,14 @@ function deployAmmo() {
             ctx,
             type: "ammo",
             position: {
-                x: Math.random() * canvas1.width - player.width,
+                x: Math.floor(Math.random() * (canvas1.width - player.width)),
                 y: 400 + (Math.random() * 300)
             },
-            width: 18,
-            height: 18,
+            width: 32,
+            height: 32,
+            sprite: {
+                src: 'assets/media/spaceshooter/PNG/Power-ups/things_bronze.png'
+            },
             color: "pink"
         }))
     }
@@ -138,10 +156,10 @@ function playerShoot() {
 // first object is projectile, second is player or enemy
 function checkCollision(object1, object2) {
     if (
-        object1.position.x > object2.position.x + object2.width ||
-        object1.position.x + object1.width < object2.position.x ||
-        object1.position.y > object2.position.y + object2.height ||
-        object1.position.y + object1.height < object2.position.y
+        object1.hitbox.x > object2.hitbox.x + object2.hitbox.width ||
+        object1.hitbox.x + object1.hitbox.width < object2.hitbox.x ||
+        object1.hitbox.y > object2.hitbox.y + object2.hitbox.height ||
+        object1.hitbox.y + object1.hitbox.height < object2.hitbox.y
     ) {
         return false;
     } else {
@@ -149,34 +167,58 @@ function checkCollision(object1, object2) {
     }
 }
 
+function checkInvasion(enemyArray) {
+    return enemyArray.find(enemy => enemy.invade)
+}
+
 // Game Start/End, Score and Timer 
 
-let hitScore = 0;
-let timeScore = 0;
-let timerId;
 
 function startGame() {
     startBtn.classList.add('hide');
     animate();
     timerId = setInterval(() => {
         timeScore++;
-        if (timeScore % 4 === 0) generateEnemies().forEach(enemy => enemies.push(enemy));
-        if (timeScore % 7 === 0) deployAmmo().forEach(item => ammo.push(item));
+        if (timeScore % 4 === 0 && wave < 10) generateEnemies().forEach(enemy => enemies.push(enemy));
+        if (timeScore % 6 === 0) deployAmmo().forEach(item => ammo.push(item));
     }, 1000)
 }
 
 function endGame() {
     clearInterval(timerId);
-    cancelAnimationFrame(animate);
+    explosion();
+}
+
+function explosion(color) {
+    for (let i = 0; i < 10; i++) {
+        particles.push(new Particle({
+            ctx,
+            x: player.position.x + player.width / 2,
+            y: player.position.y + player.height / 2,
+            color
+        }));
+    }
+    particles.forEach(particle => {
+        particle.draw();
+        particle.update();
+    })
 }
 
 
 // Animation Loop
 
+const background = new Background({
+    ctx,
+    width: canvas1.width,
+    height: canvas1.height
+})
 
 function animate() {
-    ctx.fillStyle = 'grey';
-    ctx.fillRect(0, 0, canvas1.width, canvas1.height);
+    ctx.clearRect(0, 0, canvas1.width, canvas1.height);
+
+    // player.direction[0] = "up" ? background.speed += 0.01 : background.speed = 5;
+    background.draw(background.ctx);
+    background.update();
 
     player.draw(player.ctx);
     player.update(player.direction[0]);
@@ -185,6 +227,7 @@ function animate() {
         item.draw(item.ctx);
         item.update();
         if (checkCollision(item, player)) {
+            // play enemy explosion animation at enemy position
             player.hit = true;
         };
     })
@@ -192,6 +235,7 @@ function animate() {
     projectiles.forEach((projectile, index) => {
         enemies.forEach((enemy, enemyInd) => {
             if (checkCollision(projectile, enemy)) {
+                // play enemy explosion animation at enemy position
                 enemies.splice(enemyInd, 1);
                 projectiles.splice(index, 1);
                 hitScore++;
@@ -208,8 +252,19 @@ function animate() {
             player.ammo += item.value;
         }
     })
-    console.log(player.ammo, hitScore + timeScore);
+    // console.log(player.ammo, hitScore + timeScore);
+
 
     // check for game over to cancel animation
-    player.hit ? endGame() : requestAnimationFrame(animate);
+
+    if (
+        player.hit ||
+        checkInvasion(enemies) 
+    ) {
+        player.controlled = false;
+        explosion('red');
+    } else if (enemies.length === 0 && wave === 10) {
+        explosion('green')
+    }
+    requestAnimationFrame(animate);
 };

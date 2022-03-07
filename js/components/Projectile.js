@@ -11,6 +11,7 @@ class Projectile extends GameObject {
         // add switch to check direction 'up' or 'down'
         if (this.position.y + this.height > 0) {
             this.position.y -= this.velocity.y;
+            this.hitbox.y -= this.velocity.y;
         } else {
             this.hit = true;
         };

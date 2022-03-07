@@ -86,9 +86,10 @@ function objectLoad() {
         gameboy = gltf.scene;
         scene.add(gltf.scene);
 
-        gui.add(gameboy.rotation, 'x').min(-9).max(9)
-        gui.add(gameboy.rotation, 'y').min(-9).max(9)
-        gui.add(gameboy.rotation, 'z').min(-9).max(9)
+        // const gbFolder = gui.addFolder("Gameboy");
+        // gbFolder.add(gameboy.rotation, 'x').min(-9).max(9).name('rotation x');
+        // gbFolder.add(gameboy.rotation, 'y').min(-9).max(9).name('rotation y');
+        // gbFolder.add(gameboy.rotation, 'z').min(-9).max(9).name('rotation z');
     })
 }
 objectLoad();
@@ -105,9 +106,12 @@ const startBtnListener = new THREE.Mesh(geometryBox, materialBox);
 startBtnListener.position.set(-0.3, -1.5, -0.1)
 startBtnListener.rotation.set(6.1, 0.5, 0.6)
 
-// gui.add(startBtnListener.position, 'x').min(-3).max(3).step(0.1);
-// gui.add(startBtnListener.position, 'y').min(-3).max(3).step(0.1);
-// gui.add(startBtnListener.position, 'z').min(-3).max(3).step(0.1);
+// const buttonFolder = gui.addFolder('Button Hitbox')
+// buttonFolder.add(startBtnListener.scale, 'x').min(-3).max(3).step(0.1).name('width');
+// buttonFolder.add(startBtnListener.scale, 'y').min(-3).max(3).step(0.1).name('height');
+// buttonFolder.add(startBtnListener.position, 'x').min(-3).max(3).step(0.1);
+// buttonFolder.add(startBtnListener.position, 'y').min(-3).max(3).step(0.1);
+// buttonFolder.add(startBtnListener.position, 'z').min(-3).max(3).step(0.1);
 
 scene.add(startBtnListener);
 
@@ -146,6 +150,7 @@ const addObjectClickListener = (
             raycaster.setFromCamera(mouse, camera);
 
             const intersects = raycaster.intersectObjects(scene.children);
+            console.log(objectToWatchId);
 
             const isIntersected = intersects.find(
                 (intersectedEl) => intersectedEl.object.uuid === objectToWatchId
