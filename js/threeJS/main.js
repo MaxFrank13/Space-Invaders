@@ -9,7 +9,7 @@ console.log(gsap);
 const introCanvas = document.querySelector('.intro');
 
 // Debug
-const gui = new dat.GUI();
+// const gui = new dat.GUI();
 
 // **** Setup ****
 
