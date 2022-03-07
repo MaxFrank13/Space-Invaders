@@ -252,7 +252,7 @@ function animate() {
             player.ammo += item.value;
         }
     })
-    // console.log(player.ammo, hitScore + timeScore);
+    console.log(player.ammo, hitScore + timeScore);
 
 
     // check for game over to cancel animation
