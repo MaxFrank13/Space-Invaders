@@ -6,7 +6,7 @@ Gameboy built in Blender and then imported using threeJS as well as a Space Inva
 
 [Tour of the App](https://drive.google.com/file/d/1sj2ZZykjnb90RZKVueX0BeTUUVrHpNqb/view)
 
-![Picture of Gameboy](https://drive.google.com/file/d/1sj2ZZykjnb90RZKVueX0BeTUUVrHpNqb/view)
+![Picture of Gameboy](https://github.com/MaxFrank13/Space-Invaders/blob/main/assets/media/tour/gameboy-photo.PNG)
 
 ## Installation
 
@@ -20,7 +20,7 @@ Gameboy built in Blender and then imported using threeJS as well as a Space Inva
 
 Orbit controls are provided that allow the user to move the position of the camera when clicking and dragging. Pressing the start button triggers an animation that zooms in on the Gameboy and then displays an interface representing the screen. Another UI appears and when you press start a Space Invaders game is rendered to the page.
 
-![Picture of game UI](https://drive.google.com/file/d/1sj2ZZykjnb90RZKVueX0BeTUUVrHpNqb/view)
+![Picture of game UI](https://github.com/MaxFrank13/Space-Invaders/blob/main/assets/media/tour/buttonUI-photo.PNG)
     
 ## Three.js
 
@@ -28,13 +28,13 @@ Three.js is an incredible tool for creating 3D scenes and rendering them to a we
 
 #### Button Listener in 3D
 
-![Picture of start button](https://drive.google.com/file/d/1sj2ZZykjnb90RZKVueX0BeTUUVrHpNqb/view)
+![Picture of start button](https://github.com/MaxFrank13/Space-Invaders/blob/main/assets/media/tour/startbtn-photo.PNG)
 
 A button handler is created for the start button using the `raycaster` that is available in three.js. This tool takes in a parameter for your mouse position and another for the camera's position within the 3D space. Using these coordinates, we are able to pinpoint what the user is clicking on. Raycasters solve the issue of detecting where a user's pointer is positioned based on their current view of the 3D space. As the user scrolls and moves their camera position, we need to have a way of updating this event listener and that is precisely what the raycaster does.
 
 ## Canvas Games
 
-![Picture of gameplay](https://drive.google.com/file/d/1sj2ZZykjnb90RZKVueX0BeTUUVrHpNqb/view)
+![Picture of gameplay](https://github.com/MaxFrank13/Space-Invaders/blob/main/assets/media/tour/gameplay-photo.PNG)
 
 The Canvas API is a fun and intuitive way to create animations in the web browser. It is utilized by many frameworks and libraries (including three.js) however here it is being used in its vanilla form to render a simple interactive animation. By utilizing OOP principles the game objects can effectively communicate with each other and be influenced by the user's input. The provided Space Invaders game is a take on a classic arcade game. The way this game is structured lends itself to be built out with more levels, enemies, and items.
 
