@@ -20,6 +20,7 @@ Gameboy built in Blender and then imported using threeJS as well as a Space Inva
 
 Orbit controls are provided that allow the user to move the position of the camera when clicking and dragging. Pressing the start button triggers an animation that zooms in on the Gameboy and then displays an interface representing the screen. Another UI appears and when you press start a Space Invaders game is rendered to the page.
 
+![Picture of start button](https://github.com/MaxFrank13/Space-Invaders/blob/main/assets/media/tour/startbtn-photo.PNG)
 ![Picture of game UI](https://github.com/MaxFrank13/Space-Invaders/blob/main/assets/media/tour/buttonUI-photo.PNG)
     
 ## Three.js
@@ -27,8 +28,6 @@ Orbit controls are provided that allow the user to move the position of the came
 Three.js is an incredible tool for creating 3D scenes and rendering them to a webpage. Here a 3D object has been imported from Blender and orbit camera controls are provided to the user to scroll around and inspect. With the use of `dat.gui` it gets much easier to dial in the precise values needed for an animation. 
 
 #### Button Listener in 3D
-
-![Picture of start button](https://github.com/MaxFrank13/Space-Invaders/blob/main/assets/media/tour/startbtn-photo.PNG)
 
 A button handler is created for the start button using the `raycaster` that is available in three.js. This tool takes in a parameter for your mouse position and another for the camera's position within the 3D space. Using these coordinates, we are able to pinpoint what the user is clicking on. Raycasters solve the issue of detecting where a user's pointer is positioned based on their current view of the 3D space. As the user scrolls and moves their camera position, we need to have a way of updating this event listener and that is precisely what the raycaster does.
 
