@@ -29,7 +29,7 @@ Three.js is an incredible tool for creating 3D scenes and rendering them to a we
 
 #### Button Listener in 3D
 
-A button handler is created for the start button using the `raycaster` that is available in three.js. This tool takes in a parameter for your mouse position and another for the camera's position within the 3D space. Using these coordinates, we are able to pinpoint what the user is clicking on. Raycasters solve the issue of detecting where a user's pointer is positioned based on their current view of the 3D space. As the user scrolls and moves their camera position, we need to have a way of updating this event listener and that is precisely what the raycaster does.
+A button handler is created for the start button using the `raycaster` that is available in three.js. This tool takes in a parameter for your mouse position and another for the camera's position within the 3D space. Using these coordinates, we are able to pinpoint what the user is clicking on. Raycasters solve the issue of detecting where a user's pointer is positioned based on their current view of the 3D space. As the user scrolls and moves their camera position, we need to have a way of updating the way this listener behaves and that is precisely what the raycaster does.
 
 ## Canvas Games
 
